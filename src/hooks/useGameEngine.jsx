@@ -18,9 +18,9 @@ const TIME_PHASE_PLAYER_CHOICE = 10;
 const TIME_PHASE_PLAYER_ACTION = 3;
 
 // ラウンド数
-export const NB_ROUNDS = 3;
+export const NB_ROUNDS = 10;
 // 取り合うジェムの数
-const NB_GEMS = 3;
+const NB_GEMS = 10;
 // プレイヤーに配られるカード枚数
 const CARDS_PER_PLAYER = 4;
 
@@ -93,7 +93,11 @@ export const GameEngineProvider = ({ children }) => {
         ],
         true
       );
+
+      // gemsの初期値を設定
       setGems(NB_GEMS, true);
+
+
       players.forEach((player) => {
         console.log("プレイヤーの初期値をセット id:", player.id);
         player.setState("cards", [], true);
@@ -111,9 +115,18 @@ export const GameEngineProvider = ({ children }) => {
     onPlayerJoin(startGame); 
   }, []);
 
+
   const performPlayerAction = () => {
-    const player = players[getState("playerTurn")];
-    const selectedCard = player.getState("selectedCard");
+    const playerIndex = getState("playerTurn");
+    const player = players[playerIndex];
+    
+    console.log('playerInx',playerIndex)
+    console.log('players', players)
+    if (!player) {
+        console.error("プレイヤーが見つかりません。インデックス:", playerIndex);
+        return; 
+        // プレイヤーが見つからない場合は処理を中止
+    }    const selectedCard = player.getState("selectedCard");
     const cards = player.getState("cards");
     const card = cards[selectedCard];
     // シールドで回避されたときはfalseにする
@@ -128,7 +141,6 @@ export const GameEngineProvider = ({ children }) => {
 
         // ターゲット未選択(制限時間内に選ばなかった)
         if (!target) {
-          自分の次のターンのプレイヤーをターゲットにする
           let targetIndex = (getState("playerTurn") + 1) % players.length;
           // ターゲットをセット
           player.setState("playerTarget", targetIndex, true);

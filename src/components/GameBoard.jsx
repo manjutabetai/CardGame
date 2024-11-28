@@ -13,6 +13,8 @@ import { Card } from "./Card";
 import { Player} from "./Player"
 
 export const Gameboard = () => {
+
+  
   // Streamerのレスポンシブ対応
   const viewport = useThree((state) => state.viewport);
   // 最大値を1にして縮小に対応する、デスクトップ版は 12でわるとちょうどいい
@@ -76,10 +78,13 @@ export const Gameboard = () => {
             variants={{
               selected: {
                 x: -2,
-                y: 1.5,
-                z: -2,
-                rotateY: degToRad(120),
-                scale: 1.5,
+                y: 0,
+                z: 2,
+                rotateY: degToRad(0),
+                rotateX: degToRad(0),
+                rotateZ: degToRad(0),
+              
+                scale: 2.5,
               },
             }}
           >
@@ -96,17 +101,20 @@ export const Gameboard = () => {
           </motion.group>
         ))}
       </group>
-      {/* TREASURE */}
-      {/* gemを表示 */}
-      {[...Array(gems)].map((_, index) => (
+      {/* ジェムの山 */}
+      {
+      [...Array(gems)].map((_, index) => (
         <Gltf
-          key={index}
-          src="/models/UI_Gem_Blue.gltf"
-          position-x={index * 0.5}
-          position-y={0.25}
-          scale={0.5}
-        />
-      ))}
+        key={index}
+        src="/models/UI_Gem_Blue.gltf"
+       position-x={ index > 6? (index -6) * 0.5:index > 3?(index-3)*0.5:index * 0.5}
+       position-y={0.25}
+       position-z={index > 6?-4:index > 3? -3.5:-3}
+        scale={0.5}
+      />
+      ))
+    }
+     
       {/* CHARACTERS */}
       {players.map((player, index) => (
         <group key={player.id}>

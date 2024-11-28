@@ -71,22 +71,23 @@ export const Player = ({index, player})=>{
       variants={{
         Sword: {
           // punch
-          z: 0.2,
-          x: -1,
+          z: index > 6?-4:index > 3? -3.5:-3,
+          x:  index > 6? (index -6) * 0.5:index > 3?(index-3)*0.5:index * 0.5,
         },
         Wave: {
           // shield
-          scale: 1.5,
+          scale: 2.5,
         },
-        Punch: {
+        Punch: {       
+
           // grab
-          x: 0,
-          z: 0.4,
+          z: index > 6?-4:index > 3? -3.5:-3,
+          x:  index > 6? (index -6) * 0.5:index > 3?(index-3)*0.5:index * 0.5,
         },
         Duck: {
-          // punched
-          z: -0.4,
-          x: -1,
+          // パンチを受ける側
+          z: index > 6?-4:index > 3? -3.5:-3,
+          x:  index > 6? (index -6) * 0.5:index > 3?(index-3)*0.5:index * 0.5,
           rotateY: degToRad(180),
         },
       }}
@@ -101,7 +102,7 @@ export const Player = ({index, player})=>{
         animation={animation}
       />
 
-      {/* シールドを重ねて表示 */}
+      {/*  */}
       {hasShield && <Gltf scale={0.5} src="/models/Prop_Barrel.gltf" />}
       {/* PLAYER GEMS */}
       <Center disableY disableZ>

@@ -11,7 +11,7 @@ export const Experience = () => {
       {
         isStreamScreen() ? <Gameboard/> : <MobileController/>
       } 
-      
+     
       <Environment preset="dawn" background blur={2}/>
       
     </>
