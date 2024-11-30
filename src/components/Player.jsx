@@ -3,7 +3,7 @@ import { useGameEngine } from "../hooks/useGameEngine"
 import { degToRad } from "three/src/math/MathUtils.js";
 import { PlayerName } from "./PlayerName";
 import { Character } from "./Character";
-import { Center, Gltf } from "@react-three/drei";
+import { Center, Gltf, Html } from "@react-three/drei";
 import { motion } from "framer-motion-3d";
 
 
@@ -92,6 +92,28 @@ export const Player = ({index, player})=>{
         },
       }}
     >
+        {isPlayerTurn && (
+        <Html position={[0, 1.2, 0]} center>
+          <div style={{
+            width: '30px',
+            height: '30px',
+            background: 'rgba(255, 255, 255, 0.8)',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '5px'
+          }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
+              <path fillRule="evenodd" d="M11.47 13.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 0 0-1.06-1.06L12 11.69 5.03 4.72a.75.75 0 0 0-1.06 1.06l7.5 7.5Z" clipRule="evenodd" />
+              <path fillRule="evenodd" d="M11.47 19.28a.75.75 0 0 0 1.06 0l7.5-7.5a.75.75 0 1 0-1.06-1.06L12 17.69l-6.97-6.97a.75.75 0 0 0-1.06 1.06l7.5 7.5Z" clipRule="evenodd" />
+            </svg>
+          </div>
+        </Html>
+      
+      )}
+
+
       {/* Characterのちょい上に名前を表示 */}
       <PlayerName name={player.state.profile.name} position-y={0.8} />
       {/* animationを渡し表示 */}

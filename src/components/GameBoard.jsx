@@ -12,6 +12,8 @@ import { useGameEngine } from "../hooks/useGameEngine";
 import { Card } from "./Card";
 import { Player} from "./Player"
 
+import { AxesHelper, GridHelper } from 'three';
+
 export const Gameboard = () => {
 
   
@@ -52,6 +54,8 @@ export const Gameboard = () => {
   );
 
   return (
+    <>
+    
     <group scale={scalingRatio}>
       {/* BG */}
       <Gltf
@@ -69,30 +73,33 @@ export const Gameboard = () => {
           <motion.group
             key={index}
             position-y={index * 0.015}
-            rotation-y={index % 2 ? degToRad(2) : 0}
+            //  奇数のカードをずらし重なっている状態を表現
+            rotation-y={index % 2 ? degToRad(4) : 0}
+            // 一番上のカードをselectedにする
             animate={
               phase === "playerAction" && index === deck.length - 1
                 ? "selected"
                 : ""
             }
+            // 位置と全体の回転を担当
             variants={{
               selected: {
-                x: -2,
-                y: 0,
-                z: 2,
-                rotateY: degToRad(0),
-                rotateX: degToRad(0),
-                rotateZ: degToRad(0),
-              
-                scale: 2.5,
+                x: 1.5,
+                y: 1.5,
+                z: -1,
+                rotateY: degToRad(130),
+                scale: 1.5,
               },
             }}
+           
           >
+            {/* 傾きのみを担当 */}
             <motion.group
               rotation-x={degToRad(90)}
               variants={{
                 selected: {
-                  rotateX: degToRad(-45),
+                  rotateX: degToRad(-30),
+
                 },
               }}
             >
@@ -106,11 +113,13 @@ export const Gameboard = () => {
       [...Array(gems)].map((_, index) => (
         <Gltf
         key={index}
-        src="/models/UI_Gem_Blue.gltf"
+         src="/models/grilled-fish.glb"
        position-x={ index > 6? (index -6) * 0.5:index > 3?(index-3)*0.5:index * 0.5}
        position-y={0.25}
        position-z={index > 6?-4:index > 3? -3.5:-3}
         scale={0.5}
+        rotation-x={degToRad(45)}
+       
       />
       ))
     }
@@ -122,8 +131,9 @@ export const Gameboard = () => {
         </group>
       ))}
     </group>
+    </>
   );
 };
 
 useGLTF.preload("/models/Gameboard.glb");
-useGLTF.preload("/models/UI_Gem_Blue.gltf");
+useGLTF.preload("/models/grilled-fish.glb");

@@ -2,14 +2,14 @@ import { Text, useFont, useGLTF, useTexture } from "@react-three/drei";
 import React from "react";
 
 const CARD_DESCRIPTIONS = {
-  punch: "他の海賊を殴って宝石を落とさせる",
+  punch: "強烈なオナラで相手気絶させる",
   shield: "攻撃から身を守る",
-  grab: "宝物から宝石を取る。宝石が残っていなければ、何も得られない。",
+  grab: "とにかく目の前の餌に飛びつく",
 };
 
 export function Card({ type = "shield", ...props }) {
   const { nodes, materials } = useGLTF("/models/card.glb");
-  const texture = useTexture(`cards/${type}.jpg`);
+  const texture = useTexture(`cards/${type}.png`);
   return (
     <group {...props} dispose={null}>
       <mesh castShadow receiveShadow geometry={nodes.Plane.geometry}>
@@ -73,8 +73,10 @@ export function Card({ type = "shield", ...props }) {
 }
 
 useGLTF.preload("/models/card.glb");
-useTexture.preload("/cards/punch.jpg");
-useTexture.preload("/cards/shield.jpg");
-useTexture.preload("/cards/grab.jpg");
+
+useTexture.preload("/cards/punch.png");
+useTexture.preload("/cards/shield.png");
+useTexture.preload("/cards/grab.png");
+
 useFont.preload("/fonts/NotoSansJP-Medium");
-useFont.preload("/fonts/NotoSansJP-Bold");
+useFont.preload("/fonts/NotoSansJP-Bold");  
